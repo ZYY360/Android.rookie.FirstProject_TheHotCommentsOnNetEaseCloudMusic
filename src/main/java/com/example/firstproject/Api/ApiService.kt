@@ -15,7 +15,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class ApiService {
     private val client = OkHttpClient()
-    private val token = "wnvjah7usfluyhpufglq0rqeqlp4gn"
+    private val token = "//此处为在API获取的token密钥"
     private val baseUrl = "https://v3.alapi.cn/api/comment"
 
     suspend fun fetchSongData(): Result<SongData> = suspendCoroutine { continuation ->
@@ -43,14 +43,10 @@ class ApiService {
                             val jsonObject = JSONObject(responseData)
                             if (jsonObject.getInt("code") == 200) {
                                 val dataObject = jsonObject.getJSONObject("data")
-                                // song_id在根对象中，不是在song子对象中
                                 val songId = dataObject.getLong("song_id").toString()
                                 val title = dataObject.getString("title")
                                 val author = dataObject.getString("author")
-                                // image字段对应imageUrl
                                 val imageUrl = dataObject.getString("image")
-                                
-                                // 评论信息在根对象中
                                 val commentContent = dataObject.getString("comment_content")
                                 val commentPublishedDate = dataObject.getString("comment_published_date")
 
